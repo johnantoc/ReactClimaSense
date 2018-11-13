@@ -3,7 +3,7 @@ import classes from './SideDrawer.css';
 import Logo from '../../assets/imgs/logo.png';
 import Backdrop from '../UI/BackDrop/Backdrop';
 import Aux from '../../hoc/AuxEl/AuxEl';
-import NavigationItem from '../Navigation/NavigationItem/NavigationItem';
+import Navigation from '../Navigation/Navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SideDrawer = (props) => {
@@ -15,7 +15,7 @@ const SideDrawer = (props) => {
 
     let favoritePlacesList = props.favPlaces.map((place, index) => {
         return (
-            <NavigationItem key={place + index} header={false} >{place}</NavigationItem>
+            <Navigation key={place + index} header={false} >{place}</Navigation>
         );
     });
 
@@ -26,28 +26,28 @@ const SideDrawer = (props) => {
                 <img src={Logo} alt="logo" />
                 <nav>
                     <ul>
-                        <NavigationItem header={true} >Current Location</NavigationItem>
-                        <NavigationItem header={false} >{props.currentLocation}</NavigationItem>
-                        <NavigationItem header={false} cursor="pointer" >
+                        <Navigation header={true} >Current Location</Navigation>
+                        <Navigation header={false} >{props.currentLocation}</Navigation>
+                        <Navigation header={false} cursor="pointer" >
                             {props.showSearchInput ?
                                 <input value={props.searchValue} type="text" onChange={props.searchChangeHandler} autoFocus /> :
                                 <div onClick={props.searchClickHandler}>search</div>}
                             <span onClick={props.searchPlace} ><FontAwesomeIcon icon="search" /></span>
-                        </NavigationItem>
+                        </Navigation>
                     </ul>
                     <ul>
-                        <NavigationItem header={true} >Favorite Places</NavigationItem>
+                        <Navigation header={true} >Favorite Places</Navigation>
                         {favoritePlacesList}
-                        <NavigationItem header={false} cursor="pointer" >
+                        <Navigation header={false} cursor="pointer" >
                             {props.showAddPlaceInput ?
                                 <input value={props.addPlaceValue} type="text" onChange={props.addPlaceChangeHandler} autoFocus /> :
                                 <div onClick={props.addPlaceClickHandler}>Add a Place</div>}
                             <span onClick={props.addPlace}><FontAwesomeIcon icon="plus" /></span>
-                        </NavigationItem>
+                        </Navigation>
                     </ul>
                     <ul>
-                        <NavigationItem header={false} cursor="pointer" clicked={props.helpClick} >Help</NavigationItem>
-                        <NavigationItem header={false} cursor="pointer" clicked={props.aboutClick} >About</NavigationItem>
+                        <Navigation header={false} cursor="pointer" clicked={props.helpClick} >Help</Navigation>
+                        <Navigation header={false} cursor="pointer" clicked={props.aboutClick} >About</Navigation>
                     </ul>
                 </nav>
             </div>
