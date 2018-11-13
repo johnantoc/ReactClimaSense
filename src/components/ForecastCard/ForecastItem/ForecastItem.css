@@ -1,0 +1,21 @@
+.ForecastItem {
+    width: 100%;
+    height: 80px;
+    color: white;
+    box-sizing: border-box;
+    display: block;
+    list-style: none;
+    cursor: default;
+    line-height: 74px;
+    text-transform: uppercase;
+}
+
+.ForecastItem div {
+    width: 33%;
+    display: inline-block;
+    font-size: 1.3rem;
+}
+
+.ForecastItem sup {
+    font-size: 0.9rem;
+}

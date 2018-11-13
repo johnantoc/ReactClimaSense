@@ -1,0 +1,46 @@
+.weatherItem {
+    width: 100%;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+}
+
+.weatherDate {
+    width: 94%;
+    text-align: right;
+    padding: 8% 0px;
+    color: black;
+}
+
+.weatherImg {
+    width: 100%;
+    text-align: center;
+    font-size: 8rem;
+}
+
+.weatherTemp {
+    width: 80%;
+    height: 3rem;
+    text-align: left;
+    color: black;
+    font-size: 2rem;
+    margin: 2% auto;
+    padding-bottom: 2%;
+    border-bottom: 2px solid white;
+}
+
+.weatherTemp sup {
+    font-size: 1rem;
+}
+
+.weatherTemp span {
+    display: inline-block;
+    text-align: right;
+    font-size: 1.4rem;
+    width: 70%;
+}
+
+.weatherPlace {
+    width: 80%;
+    margin: 4% auto;
+    font-size: 2rem;
+}

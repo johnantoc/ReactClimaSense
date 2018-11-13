@@ -1,0 +1,6 @@
+.Layout {
+    color: white;
+    display: flex;
+    flex-flow: row;
+    background-color: black;
+}

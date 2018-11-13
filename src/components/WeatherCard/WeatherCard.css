@@ -1,0 +1,9 @@
+.WeatherCard {
+    width: 21vw;
+    background-color: #E5C851;
+    border-radius: 10px;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    margin-right: 2vw;
+    display: inline-block;
+}

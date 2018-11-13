@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import Layout from './hoc/Layout/Layout';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSearch, faPlus, faSun, 
+          faPooStorm, faCloudShowersHeavy, 
+            faCloudSun, faSnowflake, faCloudMoon, 
+              faMoon, faTint, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faSearch, faPlus, faSun, 
+              faPooStorm, faCloudShowersHeavy, 
+                faCloudSun, faSnowflake, faCloudMoon, 
+                  faMoon, faTint, faTachometerAlt);
+
+axios.defaults.baseURL = 'https://query.yahooapis.com/v1/public/';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Layout />
     );
   }
 }

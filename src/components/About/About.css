@@ -1,0 +1,10 @@
+.About {
+    width: 100%;
+    background-color: black;
+    text-align: center;
+}
+
+.About img {
+    width: 30%;
+    height: 100px;
+}

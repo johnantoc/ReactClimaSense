@@ -1,0 +1,8 @@
+.ForecastCard {
+    width: 100%;
+}
+
+.ForecastCard ul, .ForecastCard li {
+    margin: 0 auto;
+    padding: 0;
+}
