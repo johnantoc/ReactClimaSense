@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import Aux from '../AuxEl/AuxEl'
 import styles from './Layout.css';
-import axios from 'axios';
+// import axios from 'axios';
 import SideBar from '../../containers/SideBar/SideBar';
 import WeatherBar from '../../containers/WeatherBar/WeatherBar';
 import WeatherByCity from '../../containers/WeatherByCity/WeatherByCity';
 import Backdrop from '../../components/UI/BackDrop/Backdrop';
 import LoadMask from '../../components/UI/LoadMask/LoadMask';
+import { currentData, favPlacesArr } from '../../utils/data';
 
 class Layout extends Component {
 
     state = {
         farenheitTemp: false,
         mask: true,
-        currentPlace: "kochi",
-        favPlaces: ["", "", "", "", "", ""],
+        currentPlace: currentData.data[0].data.query.results.channel.location.city,
+        favPlaces: [],
         weatherDataCurrentPlace: {},
         weatherDataFavPlaces: []
     }
@@ -27,39 +28,45 @@ class Layout extends Component {
 
     getWeatherData = () => {
 
-        let tempUnit = "c";
-        const favPlaces = [...this.state.favPlaces];
-
-        if (this.state.farenheitTemp) {
-            tempUnit = "f";
-        }
+        // let tempUnit = "c";
+        // const favPlaces = [...this.state.favPlaces];
+        // const {currentPlace} = this.state;
+        
+        // if (this.state.farenheitTemp) {
+        //     tempUnit = "f";
+        // }
 
         //mask
         this.setState({ mask: true });
 
         //current place
-        axios.get(`yql?format=json&q=select * from weather.forecast where woeid in 
-                    (select woeid from geo.places(1) where text="` +
-            this.state.currentPlace + `") and u="` + tempUnit + `"`)
-            .then(this.handleWeatherData);
-
+        // if(currentPlace){
+        //     axios.get(`yql?format=json&q=select * from weather.forecast where woeid in 
+        //                 (select woeid from geo.places(1) where text="` +
+        //         this.state.currentPlace + `") and u="` + tempUnit + `"`)
+        //         .then(this.handleWeatherData);
+        // } else {
+            this.handleWeatherData(currentData);
+        // }
         //fav places
-        let axiosReqArray = favPlaces.map((place) => {
+        // if(favPlaces.length){
+        //     let axiosReqArray = favPlaces.map((place) => {
 
-            let req = null;
-            if(place){
-                req = axios.get(`yql?format=json&q=select * from weather.forecast where woeid in 
-                            (select woeid from geo.places(1) where text="` + place + `") and u="` + tempUnit + `"`);
-            }
-            return req;
-        });
+        //         let req = null;
+        //         if(place){
+        //             req = axios.get(`yql?format=json&q=select * from weather.forecast where woeid in 
+        //                         (select woeid from geo.places(1) where text="` + place + `") and u="` + tempUnit + `"`);
+        //         }
+        //         return req;
+        //     });
 
-        axios.all(axiosReqArray)
-            .then(axios.spread(this.handleWeatherData));
+        //     axios.all(axiosReqArray)
+        //         .then(axios.spread(this.handleWeatherData));
+        // }
+        this.handleWeatherData(favPlacesArr);
     }
 
-    handleWeatherData = (...places) => {
-
+    handleWeatherData = (places) => {
         let atmosphereCodes = {
             "poo-storm": [0, 1, 2, 3, 4, 37, 38, 39, 45, 47],
             "cloud-showers-heavy": [5, 6, 8, 9, 10, 11, 12, 17, 18, 35, 40],
@@ -69,8 +76,7 @@ class Layout extends Component {
             "cloud-moon": [27, 29, 31, 33]
         };
 
-        let weatherDataArray = places.map((response) => {
-
+        let weatherDataArray = places.data.map((response) => {
             let weatherDataObj = {};
             if (response && response.status === 200) {
 
@@ -90,22 +96,20 @@ class Layout extends Component {
 
                         weatherDataObj.place = weatherData.location.city;
                         weatherDataObj.temperature = weatherData.item.condition.temp;
-                        weatherDataObj.date = (weatherData.item.condition.date.split(" ")[2] +
-                            " " + weatherData.item.condition.date.split(" ")[1]);
-                        weatherDataObj.time = (weatherData.item.condition.date.split(" ")[4] +
-                            " " + weatherData.item.condition.date.split(" ")[5]);
+                        weatherDataObj.date = weatherData.item.condition.date.split(" ")[0];
+                        weatherDataObj.time = (weatherData.item.condition.date.split(" ")[1] +
+                            " " + weatherData.item.condition.date.split(" ")[2]);
                         weatherDataObj.temperatureString = weatherData.item.condition.text.toLowerCase();
                         weatherDataObj.image = imageArray[0] ? imageArray[0] : 'sun';
-                        weatherDataObj.forecasts = weatherData.item.forecast;
-                        weatherDataObj.astronomy = weatherData.astronomy;
-                        weatherDataObj.atmosphere = weatherData.atmosphere;
-                        weatherDataObj.units = weatherData.units;
+                        weatherDataObj.forecasts = weatherData.item.forecasts;
+                        weatherDataObj.astronomy = weatherData.item.astronomy;
+                        weatherDataObj.atmosphere = weatherData.item.atmosphere;
+                        weatherDataObj.units = weatherData.item.units;
                     }
                 }
             }
             return weatherDataObj;
         });
-
         if (weatherDataArray.length > 1) {
             this.setState({ mask: false, weatherDataFavPlaces: weatherDataArray });
         } else {

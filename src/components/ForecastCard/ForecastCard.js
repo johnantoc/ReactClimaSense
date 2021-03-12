@@ -18,8 +18,7 @@ const ForecastCard = (props) => {
     let forecasts = props.forecasts.map((forecast, index) => {
 
         let darkBack = true;
-        let dateStr = (forecast.date.split(" ")[1] +
-            " " + forecast.date.split(" ")[0]);
+        let dateStr = forecast.date.split(" ")[1];
         let imageArray = ImageKeys.filter((imageKey) => {
             return atmosphereCodes[imageKey].indexOf(parseInt(forecast.code, 10)) !== -1
         });
